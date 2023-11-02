@@ -101,7 +101,20 @@ module.exports = {
 
     //delete reaction
     async deleteReaction(req, res) {
-
+        try {
+            const reaction = await Thought.findOneAndUpdate(
+                {_id: req.params.thoughtId},
+                {$pull: {reactions: {_id: req.params.reactionId}}},
+                {new: true}
+            );
+            if (!reaction) {
+                return res.status(404).json({message: "Check your thought and reaction Id!"});
+            }
+            return res.status(200).json(reaction);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
     },   
 };
 
