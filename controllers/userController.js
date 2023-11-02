@@ -106,7 +106,8 @@ module.exports = {
                 { _id: req.params.userId },
                 { $pull: { friends: req.params.friendId } },
                 { new: true }  
-            );
+            )
+            .select("-__v");
             if (!friend) {
                 return res.status(404).json({ message: "Check the Id for your user and friend."});
             }
