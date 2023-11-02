@@ -4,7 +4,8 @@ module.exports = {
     // get all thoughts
     async getThoughts(req, res) {
         try {
-            const thoughts = await Thought.find();
+            const thoughts = await Thought.find()
+            .select("-__v");
             return res.status(200).json(thoughts);
         } catch (err) {
             console.log(err);
@@ -14,19 +15,31 @@ module.exports = {
 
     //get single thought
     async getSingleThought(req, res) {
-
+        try {
+            const thought = await Thought.findOne({ _id: req.params.thoughtId})
+            .select("-__v");
+            if (!thought) {
+                return res.status(404).json({ message: "No thought with that Id!"});
+            }
+            return res.status(200).json(thought);    
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }  
     },
 
     // create thought
     async createThought(req, res) {
         try {
-            const thought = await Thought.create(req.body);
+            const thought = await Thought.create(req.body)
+            .select("-__v");
             const user = await User.findByIdAndUpdate(
                 req.body.userId,
                 {$addToSet: {thoughts: thought._id}},
                 {new: true}
-            );
-            return res.status(200).json({thought,user});
+            )
+            .select("-__v");
+            return res.status(200).json({thought, user});
         } catch (err) {
             console.log(err);
             return res.status(500).json(err);
@@ -35,12 +48,38 @@ module.exports = {
 
     // update thought
     async updateThought(req, res) {
-
+        try {
+            const thought = await Thought.findOneAndUpdate(
+                {_id: req.params.thoughtId},
+                {$set: req.body},
+                {new: true}
+            )
+            .select("-__v");
+            if (!thought) {
+                return res.status(404).json({message: "No thought with this Id!"});
+            }
+            return res.status(200).json(thought);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
     },
 
     //delete thought
     async deleteThought(req, res) {
-
+        try {
+            const thought = await Thought.findOneAndDelete(
+                {_id: req.params.thoughtId}
+            )
+            .select("-__v");
+            if (!thought) {
+                return res.status(404).json({ message: "No thought with this Id!"});
+            }
+            return res.status(200).json(thought);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
     },
 
     //create reaction
