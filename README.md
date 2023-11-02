@@ -27,7 +27,7 @@ See below a screenshot of the routes in action:
 
 See below a walkthrough video for utilizing the application:
 
-[![Walkthrough Video](url)](url)
+[![Walkthrough Video](https://www.youtube.com/watch?v=wDFzWKOx9dw)](https://www.youtube.com/watch?v=wDFzWKOx9dw)
 
  
  ## License
