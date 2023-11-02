@@ -21,7 +21,7 @@ router.route('/:userId')
 .delete(deleteUser);
 
 // route to post aand delete user's friend list /api/users/:userId/friends/:friendsId
-router.route('/:userId/friends/:friendsId')
+router.route('/:userId/friends/:friendId')
 .post(createFriend)
 .delete(deleteFriend);
 

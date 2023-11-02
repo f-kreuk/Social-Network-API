@@ -21,13 +21,13 @@ module.exports = {
     async getSingleUser(req, res) {
         try {
             const user = await User.findOne({ _id: req.params.userId })
-            .populate("thoughts")
-            .populate("friends")
-            .select("-__v");
+            .select("-__v")
+            .populate({ path: "thoughts", select: "-__v"})
+            .populate({ path: "friends", select: "-__v"});
             if (!user) {
                 return res.status(404).json({ message: 'No user with this id!'});
             }
-            res.json(user);
+            return res.status(200).json(user);
         } catch (err) {
             res.status(500).json(err);
         }
@@ -65,7 +65,9 @@ module.exports = {
     // delete user
     async deleteUser(req, res) {
         try {
-            const user = await User.findOneAndDelete({ _id: req.params.userId });
+            const user = await User.findOneAndDelete(
+                { _id: req.params.userId }
+            );
             if (!user) {
                 return res.status(404).json({ message: 'No user with this id!'});
             }
@@ -83,7 +85,8 @@ module.exports = {
         try {
             const friend = await User.findOneAndUpdate(
                 { _id: req.params.userId },
-                //
+                { $addToSet: { friends: req.params.friendId } },
+                { new: true }
             );
             if (!friend) {
                 return res.status(404).json({ message: 'No user with this id!' });
