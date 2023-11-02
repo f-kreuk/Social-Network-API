@@ -4,30 +4,37 @@ const { User, Thought } = require("../models");
 module.exports = {
 
     // get all users
-    getUsers
+    getUsers(req, res) {
 
+    },
 
     // get single user
-    getSingleUser
+    getSingleUser(req, res) {
 
+    },
 
     // create user
-    createUser
+    createUser(req, res) {
 
+    },
 
     // update user
-    updateUser
+    updateUser(req, res) {
 
+    },
 
     // delete user
-    deleteUser
+    deleteUser(req, res) {
 
+    },
 
     // create friend
-    createFriend
+    createFriend(req, res) {
 
+    },
 
     // delete friend
-    deleteFriend
+    deleteFriend(req, res) {
 
+    },
 };
