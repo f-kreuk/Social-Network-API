@@ -49,7 +49,7 @@ module.exports = {
         try {
             const user = await User.findOneAndUpdate(
                 { _id: req.params.userId },
-                { $set: req.body }
+                { $set: req.body },
                 { new: true}
             );
             if (!user) {
@@ -81,15 +81,22 @@ module.exports = {
     // create friend
     async createFriend(req, res) {
         try {
-            const friend = await.User.findOneAndUpdate(
+            const friend = await User.findOneAndUpdate(
                 { _id: req.params.userId },
                 //
-            )
+            );
+            if (!friend) {
+                return res.status(404).json({ message: 'No user with this id!' });
+            }
+            return res.status(200).json(friend);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
         }
     },
 
     // delete friend
-    deleteFriend(req, res) {
+    async deleteFriend(req, res) {
 
     },
 };
