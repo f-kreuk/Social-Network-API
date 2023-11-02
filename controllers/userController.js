@@ -79,8 +79,13 @@ module.exports = {
     },
 
     // create friend
-    createFriend(req, res) {
-
+    async createFriend(req, res) {
+        try {
+            const friend = await.User.findOneAndUpdate(
+                { _id: req.params.userId },
+                //
+            )
+        }
     },
 
     // delete friend

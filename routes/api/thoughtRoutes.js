@@ -10,9 +10,7 @@ const {
 } = require('../../controllers/thoughtController');
 
 // route to get all thoughts and post new thought /api/thoughts
-router.route('/')
-.get(getThoughts)
-.post(createThought);
+router.route('/').get(getThoughts).post(createThought);
 
 // route to get, update, and delete single user /api/thoughts/:thoughtId
 router.route('/:thoughtId')
