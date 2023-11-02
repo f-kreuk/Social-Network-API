@@ -4,8 +4,17 @@ const { User, Thought } = require("../models");
 module.exports = {
 
     // get all users
-    getUsers(req, res) {
-
+    async getUsers(req, res) {
+        try {
+            const users = await User.find()
+            .populate("thoughts")
+            .populate("friends")
+            .select("-__v");
+        return res.status(200).json(users);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
     },
 
     // get single user
